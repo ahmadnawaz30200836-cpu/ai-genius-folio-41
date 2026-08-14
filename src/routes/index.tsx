@@ -1,24 +1,67 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Header } from "@/components/portfolio/Header";
+import { Hero } from "@/components/portfolio/Hero";
+import { About } from "@/components/portfolio/About";
+import { Projects } from "@/components/portfolio/Projects";
+import { DatasetGallery } from "@/components/portfolio/DatasetGallery";
+import { Contact } from "@/components/portfolio/Contact";
+import { Footer } from "@/components/portfolio/Footer";
+import { WhatsAppButton } from "@/components/portfolio/WhatsAppButton";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Ahmad Nawaz — AI Developer Portfolio" },
+      {
+        name: "description",
+        content:
+          "AI-powered portfolio of Ahmad Nawaz: AI projects, Hugging Face dataset gallery, Python experiments and contact.",
+      },
+      { property: "og:title", content: "Ahmad Nawaz — AI Developer Portfolio" },
+      {
+        property: "og:description",
+        content:
+          "AI projects, dataset gallery and Python experiments by Ahmad Nawaz, 12th grade AI developer.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Loader() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background">
+      <div className="size-14 animate-spin rounded-full border-2 border-border border-t-primary" />
+      <p className="mt-5 font-display text-sm tracking-widest text-primary">LOADING AI…</p>
+    </div>
+  );
+}
+
+function Index() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const id = setTimeout(() => setLoading(false), 1100);
+    return () => clearTimeout(id);
+  }, []);
+
+  if (loading) return <Loader />;
+
+  return (
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Projects />
+        <DatasetGallery />
+        <Contact />
+      </main>
+      <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
