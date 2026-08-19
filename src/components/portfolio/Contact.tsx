@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from "react";
-import { Github, Linkedin, Twitter, Youtube, Send, Bot } from "lucide-react";
+import { Github, Linkedin, Twitter, Youtube, Send, Bot, MessageCircle } from "lucide-react";
 import { Reveal } from "./Reveal";
 
 const SOCIALS = [
+  { icon: MessageCircle, label: "WhatsApp +92 315 5706565", href: "https://wa.me/923155706565" },
   { icon: Github, label: "GitHub", href: "https://github.com/ahmadnawaz" },
   { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/ahmadnawaz" },
   { icon: Twitter, label: "Twitter", href: "https://twitter.com/ahmadnawaz" },
